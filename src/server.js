@@ -56,6 +56,12 @@ app.get('/posts/:id/comments',(req,res)=>{
     res.send(commentID.filter((i)=>i.postId === id))
 });
 
+app.delete('/posts/:id', (req,res)=>{
+    const id = +req.params.id;
+    postHomePage = postHomePage.filter((i)=>i.id !== id);
+    res.sendStatus(200)
+});
+
 app.post('/posts/:id/comments',(req,res)=>{
     if(req.body.author.length === 0){
         return res.status(400).send("Empty name");
