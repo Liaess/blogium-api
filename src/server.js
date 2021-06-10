@@ -22,8 +22,20 @@ app.get('/posts',(req,res)=>{
 });
 
 app.get('/posts/:postId', (req,res)=>{
-    const id = parseInt(req.params.postId)
+    const id = parseInt(req.params.postId);
     res.send(postHomePage.filter((i)=>i.id === id)[0]);
+});
+
+let countId = 1;
+
+app.post('/posts', (req,res)=>{
+    countId++;
+    const post = req.body;
+    post.content = post.content.replace("<p>","").replace("</p>","");
+    post.contentPreview = post.content.length > 19 ? post.content.split(20)[0] + "..." : post.content;
+    postHomePage.push({id:countId, ...post})
+    res.send("");
+    console.log(postHomePage);
 });
 
 
